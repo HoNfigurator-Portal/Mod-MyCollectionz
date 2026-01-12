@@ -815,35 +815,10 @@ document.querySelectorAll('.btn, .floating-menu-item, .theme-color').forEach(btn
 });
 
 // ========================================
-// 23. Dark/Light Mode Toggle
+// 23. Theme is always Dark Mode (Light mode removed)
 // ========================================
-const darkModeToggle = document.getElementById('darkModeToggle');
 const htmlElement = document.documentElement;
-
-// Check for saved preference or default to dark
-const savedMode = localStorage.getItem('colorMode') || 'dark';
-htmlElement.setAttribute('data-mode', savedMode);
-
-function toggleDarkMode() {
-    const currentMode = htmlElement.getAttribute('data-mode');
-    const newMode = currentMode === 'dark' ? 'light' : 'dark';
-    htmlElement.setAttribute('data-mode', newMode);
-    localStorage.setItem('colorMode', newMode);
-    
-    // Update toggle icon
-    if (darkModeToggle) {
-        const sunIcon = darkModeToggle.querySelector('.sun-icon');
-        const moonIcon = darkModeToggle.querySelector('.moon-icon');
-        if (sunIcon && moonIcon) {
-            sunIcon.style.display = newMode === 'dark' ? 'block' : 'none';
-            moonIcon.style.display = newMode === 'dark' ? 'none' : 'block';
-        }
-    }
-}
-
-if (darkModeToggle) {
-    darkModeToggle.addEventListener('click', toggleDarkMode);
-}
+htmlElement.setAttribute('data-mode', 'dark');
 
 // ========================================
 // 24. Announcement Banner
