@@ -16,6 +16,54 @@
     <!-- Progress Bar -->
     <div class="progress-bar" id="progressBar"></div>
 
+    <!-- Cursor Trail Effect -->
+    <div class="cursor-trail" id="cursorTrail"></div>
+
+    <!-- Glassmorphism Navbar -->
+    <nav class="glass-navbar" id="glassNavbar">
+        <div class="nav-brand">
+            <span class="nav-logo">⚔️</span>
+            <span class="nav-title">HoN Reborn</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link active" data-section="home">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>Home</span>
+            </a>
+            <a href="#gallery-section" class="nav-link" data-section="gallery">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                <span>Gallery</span>
+            </a>
+            <a href="https://discord.gg/q5KjPGT2Hv" target="_blank" class="nav-link">
+                <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25 19.736 19.736 0 0 0-4.885 1.515C.533 9.048-.32 13.58.099 18.057a19.9 19.9 0 0 0 5.993 3.03c.462-.63.874-1.295 1.226-1.994a13.107 13.107 0 0 1-1.872-.892c.12-.098.246-.196.373-.292 3.928 1.793 8.18 1.793 12.062 0 .12.098.246.196.373.292a12.299 12.299 0 0 1-1.873.892c.36.698.772 1.362 1.225 1.993a19.839 19.839 0 0 0 6.002-3.03c.5-5.177-.838-9.674-3.549-13.66z"/></svg>
+                <span>Discord</span>
+            </a>
+        </div>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggle" title="Change Theme">
+                <svg class="theme-icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Theme Color Picker Panel -->
+    <div class="theme-picker" id="themePicker">
+        <div class="theme-picker-header">
+            <span>🎨 เลือกธีมสี</span>
+            <button class="theme-picker-close" id="themePickerClose">×</button>
+        </div>
+        <div class="theme-colors">
+            <button class="theme-color active" data-theme="purple" style="--theme-color: #a78bfa" title="Purple (Default)"></button>
+            <button class="theme-color" data-theme="blue" style="--theme-color: #60a5fa" title="Blue"></button>
+            <button class="theme-color" data-theme="cyan" style="--theme-color: #22d3d8" title="Cyan"></button>
+            <button class="theme-color" data-theme="green" style="--theme-color: #4ade80" title="Green"></button>
+            <button class="theme-color" data-theme="yellow" style="--theme-color: #facc15" title="Yellow"></button>
+            <button class="theme-color" data-theme="orange" style="--theme-color: #fb923c" title="Orange"></button>
+            <button class="theme-color" data-theme="pink" style="--theme-color: #f472b6" title="Pink"></button>
+            <button class="theme-color" data-theme="red" style="--theme-color: #f87171" title="Red"></button>
+        </div>
+    </div>
+
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader"></div>
@@ -249,7 +297,7 @@
         </header>
 
         <!-- Discord Card -->
-        <div class="card card-discord">
+        <div class="card card-discord tilt-card">
             <svg class="card-icon discord" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.069.069 0 0 0-.032.027C.533 9.048-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.23 10.23 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.196.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
             </svg>
@@ -263,7 +311,7 @@
         </div>
 
         <!-- Update Info Card -->
-        <div class="card card-update fade-in">
+        <div class="card card-update fade-in tilt-card">
             <span class="update-badge"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:4px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>NEW UPDATE</span>
             <p class="update-title" data-i18n="updateTitle">ยังไม่มีไฟล์แบบรวมที่เดียว<br>ในอนาคตจะอัพเดทใหม่เรื่อยๆ</p>
             
@@ -281,20 +329,20 @@
         <div class="card fade-in">
             <h3 class="card-title"><svg style="width:20px;height:20px;vertical-align:middle;margin-right:8px;fill:var(--primary)" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg><span data-i18n="statsTitle">สถิติ</span></h3>
             <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number" id="totalMods">50+</div>
+                <div class="stat-item glow-box">
+                    <div class="stat-number counter" data-target="50" data-suffix="+">0</div>
                     <div class="stat-label">Total Mods</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="totalDownloads">1K+</div>
+                <div class="stat-item glow-box">
+                    <div class="stat-number counter" data-target="1000" data-suffix="+" data-format="k">0</div>
                     <div class="stat-label">Downloads</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="totalMembers">500+</div>
+                <div class="stat-item glow-box">
+                    <div class="stat-number counter" data-target="500" data-suffix="+">0</div>
                     <div class="stat-label">Discord Members</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">2024</div>
+                <div class="stat-item glow-box">
+                    <div class="stat-number counter" data-target="2024" data-suffix="">0</div>
                     <div class="stat-label">Since Year</div>
                 </div>
             </div>
@@ -383,9 +431,39 @@
             </a>
         </div>
 
+        <!-- Floating Quick Menu -->
+        <div class="floating-menu" id="floatingMenu">
+            <button class="floating-menu-toggle" id="floatingMenuToggle">
+                <svg class="menu-icon-open" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                <svg class="menu-icon-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+            <div class="floating-menu-items">
+                <a href="https://discord.gg/q5KjPGT2Hv" target="_blank" class="floating-menu-item discord" title="Discord">
+                    <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25 19.736 19.736 0 0 0-4.885 1.515C.533 9.048-.32 13.58.099 18.057a19.9 19.9 0 0 0 5.993 3.03c.462-.63.874-1.295 1.226-1.994a13.107 13.107 0 0 1-1.872-.892c.12-.098.246-.196.373-.292 3.928 1.793 8.18 1.793 12.062 0c.12.098.246.196.373.292a12.299 12.299 0 0 1-1.873.892c.36.698.772 1.362 1.225 1.993a19.839 19.839 0 0 0 6.002-3.03c.5-5.177-.838-9.674-3.549-13.66z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/HonModAllMyCollectionz2" target="_blank" class="floating-menu-item facebook" title="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="https://www.youtube.com/playlist?list=PLr-xQCOT3X-h2cNqZv0J41noEIta8pxfo" target="_blank" class="floating-menu-item youtube" title="YouTube">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+                <button class="floating-menu-item settings" title="Settings" onclick="document.getElementById('themePicker').classList.toggle('show')">
+                    <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                </button>
+            </div>
+        </div>
+
         <!-- Footer -->
         <footer class="footer">
             <p><span class="footer-brand">Project Mod MyCollectionz</span> • Kim22</p>
+            <div class="footer-links">
+                <a href="https://discord.gg/q5KjPGT2Hv" target="_blank">Discord</a>
+                <span>•</span>
+                <a href="https://www.facebook.com/HonModAllMyCollectionz2" target="_blank">Facebook</a>
+                <span>•</span>
+                <a href="https://www.youtube.com/playlist?list=PLr-xQCOT3X-h2cNqZv0J41noEIta8pxfo" target="_blank">YouTube</a>
+            </div>
+            <p class="footer-copy">© 2024 - 2026 Kim22. Made with ❤️</p>
         </footer>
     </div>
 

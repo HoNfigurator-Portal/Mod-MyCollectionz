@@ -574,3 +574,244 @@ function showAuthNotification(message, type = 'info') {
 // Initialize Discord Auth
 checkAuthParams();
 checkLoginStatus();
+
+// ========================================
+// 15. Glassmorphism Navbar on Scroll
+// ========================================
+const glassNavbar = document.getElementById('glassNavbar');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+    if (!glassNavbar) return;
+    
+    const currentScrollY = window.scrollY;
+    
+    // Show navbar after scrolling down 300px
+    if (currentScrollY > 300) {
+        glassNavbar.classList.add('visible');
+        document.body.classList.add('has-navbar');
+    } else {
+        glassNavbar.classList.remove('visible');
+        document.body.classList.remove('has-navbar');
+    }
+    
+    lastScrollY = currentScrollY;
+});
+
+// Navbar link active state
+const navLinks = document.querySelectorAll('.nav-link[data-section]');
+const sections = document.querySelectorAll('[id]');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 200) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-section') === current || 
+            (current === '' && link.getAttribute('data-section') === 'home')) {
+            link.classList.add('active');
+        }
+    });
+});
+
+// ========================================
+// 16. Theme Color Picker
+// ========================================
+const themeToggle = document.getElementById('themeToggle');
+const themePicker = document.getElementById('themePicker');
+const themePickerClose = document.getElementById('themePickerClose');
+const themeColors = document.querySelectorAll('.theme-color');
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme-color') || 'purple';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeColors.forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-theme') === savedTheme);
+});
+
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        themePicker?.classList.toggle('show');
+    });
+}
+
+if (themePickerClose) {
+    themePickerClose.addEventListener('click', () => {
+        themePicker?.classList.remove('show');
+    });
+}
+
+themeColors.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const theme = btn.getAttribute('data-theme');
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme-color', theme);
+        
+        themeColors.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Close picker after selection
+        setTimeout(() => themePicker?.classList.remove('show'), 300);
+    });
+});
+
+// Close picker when clicking outside
+document.addEventListener('click', (e) => {
+    if (themePicker && !themePicker.contains(e.target) && !themeToggle?.contains(e.target)) {
+        themePicker.classList.remove('show');
+    }
+});
+
+// ========================================
+// 17. Cursor Trail Effect
+// ========================================
+const cursorTrail = document.getElementById('cursorTrail');
+let trailEnabled = true;
+
+// Disable on mobile
+if ('ontouchstart' in window) {
+    trailEnabled = false;
+}
+
+if (cursorTrail && trailEnabled) {
+    document.addEventListener('mousemove', (e) => {
+        // Throttle the effect
+        if (Math.random() > 0.7) return;
+        
+        const dot = document.createElement('div');
+        dot.className = 'cursor-dot';
+        dot.style.left = e.clientX + 'px';
+        dot.style.top = e.clientY + 'px';
+        cursorTrail.appendChild(dot);
+        
+        // Remove dot after animation
+        setTimeout(() => dot.remove(), 500);
+    });
+}
+
+// ========================================
+// 18. 3D Tilt Card Effect
+// ========================================
+const tiltCards = document.querySelectorAll('.tilt-card');
+
+tiltCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+    });
+});
+
+// ========================================
+// 19. Animated Counter
+// ========================================
+const counters = document.querySelectorAll('.counter');
+
+const animateCounter = (counter) => {
+    const target = parseInt(counter.getAttribute('data-target'));
+    const suffix = counter.getAttribute('data-suffix') || '';
+    const format = counter.getAttribute('data-format');
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    
+    const updateCounter = () => {
+        current += step;
+        if (current < target) {
+            let displayValue = Math.floor(current);
+            if (format === 'k' && displayValue >= 1000) {
+                displayValue = (displayValue / 1000).toFixed(1) + 'K';
+            }
+            counter.textContent = displayValue + suffix;
+            requestAnimationFrame(updateCounter);
+        } else {
+            let displayValue = target;
+            if (format === 'k' && displayValue >= 1000) {
+                displayValue = (displayValue / 1000).toFixed(0) + 'K';
+            }
+            counter.textContent = displayValue + suffix;
+        }
+    };
+    
+    updateCounter();
+};
+
+// Observe counters for animation
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+            entry.target.classList.add('counted');
+            animateCounter(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+counters.forEach(counter => counterObserver.observe(counter));
+
+// ========================================
+// 20. Floating Quick Menu
+// ========================================
+const floatingMenu = document.getElementById('floatingMenu');
+const floatingMenuToggle = document.getElementById('floatingMenuToggle');
+
+if (floatingMenuToggle && floatingMenu) {
+    floatingMenuToggle.addEventListener('click', () => {
+        floatingMenu.classList.toggle('open');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!floatingMenu.contains(e.target)) {
+            floatingMenu.classList.remove('open');
+        }
+    });
+}
+
+// ========================================
+// 21. Smooth Scroll for Nav Links
+// ========================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            e.preventDefault();
+            const navbarHeight = glassNavbar?.classList.contains('visible') ? 70 : 0;
+            const targetPosition = targetElement.offsetTop - navbarHeight - 20;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// ========================================
+// 22. Ripple Effect on Buttons
+// ========================================
+document.querySelectorAll('.btn, .floating-menu-item, .theme-color').forEach(btn => {
+    btn.classList.add('ripple');
+});
+
+console.log('🚀 All advanced effects loaded!');
