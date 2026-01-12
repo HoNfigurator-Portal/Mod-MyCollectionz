@@ -1,0 +1,47 @@
+{
+    "name": "HoN Reborn - Project Mod MyCollectionz",
+    "short_name": "HoN Mod",
+    "description": "จุดรวม Mod เกมส์ HoN ของชาแนล Kim22",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a12",
+    "theme_color": "#a78bfa",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "https://media.discordapp.net/attachments/693718097541988374/1459991531170697246/raw_1.png?ex=69654a92&is=6963f912&hm=d2fc28a5c88b81d09db1bb0e6ade143e3241a637da201a0e03c3b07cb13283f7&=&format=webp&quality=lossless&width=192&height=192",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "https://media.discordapp.net/attachments/693718097541988374/1459991531170697246/raw_1.png?ex=69654a92&is=6963f912&hm=d2fc28a5c88b81d09db1bb0e6ade143e3241a637da201a0e03c3b07cb13283f7&=&format=webp&quality=lossless&width=512&height=512",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["games", "entertainment"],
+    "screenshots": [
+        {
+            "src": "https://media.discordapp.net/attachments/693718097541988374/1459991531170697246/raw_1.png",
+            "sizes": "1376x917",
+            "type": "image/png",
+            "form_factor": "wide"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Gallery",
+            "short_name": "Gallery",
+            "description": "View all mods",
+            "url": "/#gallery-section"
+        },
+        {
+            "name": "Discord",
+            "short_name": "Discord",
+            "description": "Join Discord Server",
+            "url": "https://discord.gg/q5KjPGT2Hv"
+        }
+    ]
+}

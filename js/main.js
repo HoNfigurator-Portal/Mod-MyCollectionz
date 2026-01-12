@@ -814,4 +814,438 @@ document.querySelectorAll('.btn, .floating-menu-item, .theme-color').forEach(btn
     btn.classList.add('ripple');
 });
 
+// ========================================
+// 23. Dark/Light Mode Toggle
+// ========================================
+const darkModeToggle = document.getElementById('darkModeToggle');
+const htmlElement = document.documentElement;
+
+// Check for saved preference or default to dark
+const savedMode = localStorage.getItem('colorMode') || 'dark';
+htmlElement.setAttribute('data-mode', savedMode);
+
+function toggleDarkMode() {
+    const currentMode = htmlElement.getAttribute('data-mode');
+    const newMode = currentMode === 'dark' ? 'light' : 'dark';
+    htmlElement.setAttribute('data-mode', newMode);
+    localStorage.setItem('colorMode', newMode);
+    
+    // Update toggle icon
+    if (darkModeToggle) {
+        const sunIcon = darkModeToggle.querySelector('.sun-icon');
+        const moonIcon = darkModeToggle.querySelector('.moon-icon');
+        if (sunIcon && moonIcon) {
+            sunIcon.style.display = newMode === 'dark' ? 'block' : 'none';
+            moonIcon.style.display = newMode === 'dark' ? 'none' : 'block';
+        }
+    }
+}
+
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+}
+
+// ========================================
+// 24. Announcement Banner
+// ========================================
+const announcementBanner = document.getElementById('announcementBanner');
+const announcementClose = document.querySelector('.announcement-close');
+
+function closeAnnouncement() {
+    if (announcementBanner) {
+        announcementBanner.classList.add('hidden');
+        sessionStorage.setItem('announcementClosed', 'true');
+    }
+}
+
+// Check if already closed in this session
+if (sessionStorage.getItem('announcementClosed') === 'true' && announcementBanner) {
+    announcementBanner.classList.add('hidden');
+}
+
+if (announcementClose) {
+    announcementClose.addEventListener('click', closeAnnouncement);
+}
+
+// ========================================
+// 25. Search & Filter Gallery
+// ========================================
+const searchInput = document.getElementById('modSearch');
+const filterButtons = document.querySelectorAll('.filter-btn');
+const modCards = document.querySelectorAll('.mod-card');
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+function filterGallery() {
+    modCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category') || 'all';
+        const cardName = card.getAttribute('data-name')?.toLowerCase() || '';
+        const cardHero = card.getAttribute('data-hero')?.toLowerCase() || '';
+        
+        const matchesFilter = currentFilter === 'all' || cardCategory === currentFilter;
+        const matchesSearch = currentSearch === '' || 
+            cardName.includes(currentSearch) || 
+            cardHero.includes(currentSearch);
+        
+        if (matchesFilter && matchesSearch) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value.toLowerCase().trim();
+        filterGallery();
+    });
+}
+
+filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        filterGallery();
+    });
+});
+
+// ========================================
+// 26. Random Mod Showcase
+// ========================================
+function showRandomMod() {
+    const visibleCards = Array.from(modCards).filter(card => !card.classList.contains('hidden'));
+    if (visibleCards.length === 0) return;
+    
+    const randomIndex = Math.floor(Math.random() * visibleCards.length);
+    const randomCard = visibleCards[randomIndex];
+    
+    // Scroll to the random card
+    randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Highlight effect
+    randomCard.style.transform = 'scale(1.05)';
+    randomCard.style.boxShadow = '0 0 40px var(--primary-glow)';
+    
+    setTimeout(() => {
+        randomCard.style.transform = '';
+        randomCard.style.boxShadow = '';
+    }, 2000);
+}
+
+// ========================================
+// 27. Image Lightbox
+// ========================================
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCaption = document.getElementById('lightboxCaption');
+let lightboxImages = [];
+let currentLightboxIndex = 0;
+
+function openLightbox(imgSrc, caption, index) {
+    if (lightbox && lightboxImg) {
+        lightboxImg.src = imgSrc;
+        if (lightboxCaption) lightboxCaption.textContent = caption || '';
+        currentLightboxIndex = index || 0;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeLightbox() {
+    if (lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function navigateLightbox(direction) {
+    if (lightboxImages.length === 0) return;
+    currentLightboxIndex += direction;
+    if (currentLightboxIndex < 0) currentLightboxIndex = lightboxImages.length - 1;
+    if (currentLightboxIndex >= lightboxImages.length) currentLightboxIndex = 0;
+    
+    const img = lightboxImages[currentLightboxIndex];
+    if (lightboxImg) lightboxImg.src = img.src;
+    if (lightboxCaption) lightboxCaption.textContent = img.caption || '';
+}
+
+// Initialize lightbox for mod card images
+modCards.forEach((card, index) => {
+    const img = card.querySelector('img');
+    if (img) {
+        lightboxImages.push({ src: img.src, caption: card.getAttribute('data-name') });
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openLightbox(img.src, card.getAttribute('data-name'), index);
+        });
+    }
+});
+
+// Close on background click
+if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (!lightbox?.classList.contains('active')) return;
+    
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigateLightbox(-1);
+    if (e.key === 'ArrowRight') navigateLightbox(1);
+});
+
+// ========================================
+// 28. Modal System (Request, Changelog, Hero Browser)
+// ========================================
+const modRequestModal = document.getElementById('modRequestModal');
+const changelogModal = document.getElementById('changelogModal');
+const heroBrowserModal = document.getElementById('heroBrowserModal');
+
+function openModRequest() {
+    if (modRequestModal) {
+        modRequestModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModRequest() {
+    if (modRequestModal) {
+        modRequestModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function openChangelog() {
+    if (changelogModal) {
+        changelogModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeChangelog() {
+    if (changelogModal) {
+        changelogModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function openHeroBrowser() {
+    if (heroBrowserModal) {
+        heroBrowserModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        loadHeroes();
+    }
+}
+
+function closeHeroBrowser() {
+    if (heroBrowserModal) {
+        heroBrowserModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Close modals on background click
+[modRequestModal, changelogModal, heroBrowserModal].forEach(modal => {
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+});
+
+// ========================================
+// 29. Mod Request Form Handler
+// ========================================
+const modRequestForm = document.getElementById('modRequestForm');
+
+if (modRequestForm) {
+    modRequestForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(modRequestForm);
+        const data = {
+            heroName: formData.get('heroName'),
+            modType: formData.get('modType'),
+            description: formData.get('description'),
+            reference: formData.get('reference'),
+            discordUsername: formData.get('discordUsername')
+        };
+        
+        // Here you would send to your backend/Discord webhook
+        console.log('Mod Request:', data);
+        
+        // Show success message
+        alert('🎉 ส่งคำขอเรียบร้อยแล้ว! เราจะพิจารณาและตอบกลับในเร็วๆ นี้');
+        modRequestForm.reset();
+        closeModRequest();
+    });
+}
+
+// ========================================
+// 30. Hero Browser (HoN Heroes)
+// ========================================
+const heroGrid = document.getElementById('heroGrid');
+const heroSearch = document.getElementById('heroSearch');
+
+// Sample HoN heroes data
+const honHeroes = [
+    { name: 'Chronos', icon: 'https://www.heroesofnewerth.com/images/heroes/110/icon_128.jpg' },
+    { name: 'Deadwood', icon: 'https://www.heroesofnewerth.com/images/heroes/145/icon_128.jpg' },
+    { name: 'Devourer', icon: 'https://www.heroesofnewerth.com/images/heroes/103/icon_128.jpg' },
+    { name: 'Gladiator', icon: 'https://www.heroesofnewerth.com/images/heroes/143/icon_128.jpg' },
+    { name: 'Hammerstorm', icon: 'https://www.heroesofnewerth.com/images/heroes/102/icon_128.jpg' },
+    { name: 'Madman', icon: 'https://www.heroesofnewerth.com/images/heroes/141/icon_128.jpg' },
+    { name: 'Moon Queen', icon: 'https://www.heroesofnewerth.com/images/heroes/107/icon_128.jpg' },
+    { name: 'Pebbles', icon: 'https://www.heroesofnewerth.com/images/heroes/101/icon_128.jpg' },
+    { name: 'Predator', icon: 'https://www.heroesofnewerth.com/images/heroes/146/icon_128.jpg' },
+    { name: 'Pyromancer', icon: 'https://www.heroesofnewerth.com/images/heroes/109/icon_128.jpg' },
+    { name: 'Scout', icon: 'https://www.heroesofnewerth.com/images/heroes/147/icon_128.jpg' },
+    { name: 'Swiftblade', icon: 'https://www.heroesofnewerth.com/images/heroes/104/icon_128.jpg' },
+    { name: 'Thunderbringer', icon: 'https://www.heroesofnewerth.com/images/heroes/108/icon_128.jpg' },
+    { name: 'Valkyrie', icon: 'https://www.heroesofnewerth.com/images/heroes/142/icon_128.jpg' },
+    { name: 'War Beast', icon: 'https://www.heroesofnewerth.com/images/heroes/105/icon_128.jpg' },
+    { name: 'Wildsoul', icon: 'https://www.heroesofnewerth.com/images/heroes/144/icon_128.jpg' }
+];
+
+// Check which heroes have mods
+function getHeroesWithMods() {
+    const heroNames = [];
+    modCards.forEach(card => {
+        const hero = card.getAttribute('data-hero');
+        if (hero) heroNames.push(hero.toLowerCase());
+    });
+    return heroNames;
+}
+
+function loadHeroes(searchTerm = '') {
+    if (!heroGrid) return;
+    
+    const heroesWithMods = getHeroesWithMods();
+    heroGrid.innerHTML = '';
+    
+    const filteredHeroes = honHeroes.filter(hero => 
+        hero.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+    filteredHeroes.forEach(hero => {
+        const hasMod = heroesWithMods.includes(hero.name.toLowerCase());
+        const heroItem = document.createElement('div');
+        heroItem.className = `hero-item ${hasMod ? 'has-mod' : ''}`;
+        heroItem.innerHTML = `
+            <img src="${hero.icon}" alt="${hero.name}" loading="lazy">
+            <span class="hero-name">${hero.name}</span>
+        `;
+        heroItem.addEventListener('click', () => {
+            if (hasMod) {
+                // Filter gallery to show this hero's mods
+                if (searchInput) {
+                    searchInput.value = hero.name;
+                    currentSearch = hero.name.toLowerCase();
+                    filterGallery();
+                }
+                closeHeroBrowser();
+                document.getElementById('gallery-section')?.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        heroGrid.appendChild(heroItem);
+    });
+}
+
+if (heroSearch) {
+    heroSearch.addEventListener('input', (e) => {
+        loadHeroes(e.target.value);
+    });
+}
+
+// ========================================
+// 31. Live Discord Member Count
+// ========================================
+async function updateDiscordCount() {
+    try {
+        // Discord Server ID for Kim22
+        const response = await fetch('https://discord.com/api/v9/invites/q5KjPGT2Hv?with_counts=true');
+        const data = await response.json();
+        
+        const countElement = document.querySelector('.discord-live-count .count-number');
+        if (countElement && data.approximate_member_count) {
+            countElement.textContent = data.approximate_member_count.toLocaleString();
+        }
+    } catch (error) {
+        console.log('Could not fetch Discord member count');
+    }
+}
+
+// Update on page load and every 5 minutes
+updateDiscordCount();
+setInterval(updateDiscordCount, 300000);
+
+// ========================================
+// 32. Image Lazy Loading with Intersection Observer
+// ========================================
+const lazyImages = document.querySelectorAll('img[data-src]');
+const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            img.classList.add('lazy-loaded');
+            imageObserver.unobserve(img);
+        }
+    });
+}, { rootMargin: '50px' });
+
+lazyImages.forEach(img => {
+    img.classList.add('lazy-loading');
+    imageObserver.observe(img);
+});
+
+// ========================================
+// 33. PWA Install Prompt
+// ========================================
+let deferredPrompt;
+const installPrompt = document.querySelector('.install-pwa-prompt');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Show install prompt if not dismissed before
+    if (localStorage.getItem('pwaPromptDismissed') !== 'true' && installPrompt) {
+        setTimeout(() => {
+            installPrompt.classList.add('show');
+        }, 3000);
+    }
+});
+
+function installPWA() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('PWA installed');
+            }
+            deferredPrompt = null;
+            if (installPrompt) installPrompt.classList.remove('show');
+        });
+    }
+}
+
+function dismissPWAPrompt() {
+    if (installPrompt) {
+        installPrompt.classList.remove('show');
+        localStorage.setItem('pwaPromptDismissed', 'true');
+    }
+}
+
 console.log('🚀 All advanced effects loaded!');
