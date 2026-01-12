@@ -350,10 +350,10 @@ body {
     align-items: center;
     gap: 8px;
     padding: 10px 16px;
-    background: #5865f2;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 50px;
     cursor: pointer;
     font-family: inherit;
     font-size: 0.9rem;
@@ -362,9 +362,8 @@ body {
 }
 
 .btn-discord-login:hover {
-    background: #4752c4;
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(88, 101, 242, 0.4);
+    box-shadow: 0 5px 20px var(--primary-glow);
 }
 
 .btn-discord-login svg {
@@ -1510,25 +1509,33 @@ body {
 
 .view-btn {
     padding: 10px 20px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    background: transparent;
+    border: 2px solid var(--border);
+    border-radius: 50px;
     color: var(--text);
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
-.view-btn:hover, .view-btn.active {
+.view-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.view-btn.active {
     background: var(--primary);
     border-color: var(--primary);
+    color: white;
 }
 
 .view-btn svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     fill: currentColor;
 }
 
@@ -3698,44 +3705,4 @@ body.announcement-hidden .mobile-menu-btn {
 
 .search-clear:hover {
     color: var(--primary);
-}
-
-/* View Toggle Buttons */
-.view-toggle {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.view-btn {
-    padding: 10px 18px;
-    border-radius: 50px;
-    border: 2px solid var(--border);
-    background: transparent;
-    color: var(--text);
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-}
-
-.view-btn svg {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
-}
-
-.view-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.view-btn.active {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
 }
