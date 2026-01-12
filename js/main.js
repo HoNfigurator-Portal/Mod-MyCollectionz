@@ -851,17 +851,28 @@ if (darkModeToggle) {
 const announcementBanner = document.getElementById('announcementBanner');
 const announcementClose = document.querySelector('.announcement-close');
 
+// Initialize announcement state
+function initAnnouncement() {
+    if (announcementBanner) {
+        if (sessionStorage.getItem('announcementClosed') === 'true') {
+            announcementBanner.classList.add('hidden');
+            document.body.classList.add('announcement-hidden');
+        } else {
+            document.body.classList.add('has-announcement');
+        }
+    }
+}
+
 function closeAnnouncement() {
     if (announcementBanner) {
         announcementBanner.classList.add('hidden');
+        document.body.classList.add('announcement-hidden');
         sessionStorage.setItem('announcementClosed', 'true');
     }
 }
 
-// Check if already closed in this session
-if (sessionStorage.getItem('announcementClosed') === 'true' && announcementBanner) {
-    announcementBanner.classList.add('hidden');
-}
+// Initialize on load
+initAnnouncement();
 
 if (announcementClose) {
     announcementClose.addEventListener('click', closeAnnouncement);
