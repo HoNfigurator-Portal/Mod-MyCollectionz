@@ -1,0 +1,16 @@
+{
+  "name": "hon-reborn-discord-auth",
+  "version": "1.0.0",
+  "description": "Discord OAuth for HoN Reborn - Vercel Serverless",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "cookie": "^0.6.0"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  }
+}
