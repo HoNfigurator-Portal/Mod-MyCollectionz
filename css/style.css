@@ -1854,7 +1854,57 @@ body.has-announcement .mobile-menu-btn {
 
 .nav-actions {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.nav-action-btn:hover {
+    background: rgba(167, 139, 250, 0.2);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.nav-action-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* Dark mode icon toggle */
+.nav-action-btn .icon-sun,
+.nav-action-btn .icon-moon {
+    width: 20px;
+    height: 20px;
+}
+
+[data-mode="dark"] .nav-action-btn .icon-sun {
+    display: block;
+}
+
+[data-mode="dark"] .nav-action-btn .icon-moon {
+    display: none;
+}
+
+[data-mode="light"] .nav-action-btn .icon-sun {
+    display: none;
+}
+
+[data-mode="light"] .nav-action-btn .icon-moon {
+    display: block;
 }
 
 .theme-toggle {
